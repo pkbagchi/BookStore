@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.book.store.dto.BookDto;
 import com.book.store.model.Book;
 import com.book.store.model.Category;
 import com.book.store.service.BookService;
@@ -60,7 +59,13 @@ public class BookController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
 		if( bindingResult.hasErrors() ) {
-			return "/book/form";
+			if(book.getAuthor().size() == 0 && book.getId() != null) {
+				return "redirect:/book/edit/"+book.getId();
+			} else if(book.getAuthor().size() == 0 && book.getId() == null) {
+				return "redirect:/book/add";
+			} else {
+				return "/book/form";
+			}
 		}
 		
 		if( book.getId() == null ) {
@@ -73,7 +78,7 @@ public class BookController {
 				return "redirect:/book/add";
 			}
 		} else {
-			Book updatedBook = bookService.save(book);
+			Book updatedBook = bookService.updateBook(book);
 			redirectAttributes.addFlashAttribute("successMsg", "Changes for '" + book.getTitle() + "' are saved successfully. ");
 			return "redirect:/book/edit/"+updatedBook.getId();
 		}
@@ -83,12 +88,7 @@ public class BookController {
 	public String removeBook(@PathVariable(name = "id") Long id, Model model) {
 		Book book = bookService.get( id );
 		if( book != null ) {
-			if( bookService.hasUsage(book) ) {
-				model.addAttribute("bookInUse", true);
-				return showBooksPage(model);
-			} else {
-				bookService.delete(id);
-			}
+			bookService.delete(id);
 		}
 		return "redirect:/book/list";
 	}

@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,6 +39,7 @@ public class Book implements Serializable {
 
 	@NotNull(message = "*Please enter price")
 	@NotBlank(message = "*Please enter price")
+	@Pattern(regexp = "^[0-9]+(\\.[0-9]+)?$", message = "Please Inter correct price tag")
 	@Column(name = "PRICE")
 	private String price;
 	@NotNull(message = "*Please enter publication year")

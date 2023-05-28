@@ -24,7 +24,7 @@ public class BookService {
 	@Autowired
 	AuthorService authorService;
 	@Autowired
-	AuthorBookTableMapRepository authorBookTableMapRepository;
+	AuthorBookTableService authorBookTableService;
 
 	public Long getTotalCount() {
 		return bookRepository.count();
@@ -64,20 +64,24 @@ public class BookService {
 	public Book addNew(Book book) {
 		book.setCreatedBy(Utils.getLoggedInUser());
 		book.setCreatedOn(new Date());
-		List<AuthorBookTableMap> authorBookTableMapList = new ArrayList<>();
 		Book saveBook =  bookRepository.save(book);
-		for(Author author : book.getAuthor()) {
-			AuthorBookTableMap authorBookTableMap = new AuthorBookTableMap();
-			authorBookTableMap.setAuthorId(author.getId());
-			authorBookTableMap.setBookId(saveBook.getId());
-			authorBookTableMapList.add(authorBookTableMap);
-		}
-		authorBookTableMapRepository.saveAll(authorBookTableMapList);
+		authorBookTableService.saveAll(book,saveBook);
 		return book;
 	}
 
 	public Book save(Book book) {
 		return bookRepository.save(book);
+	}
+
+	public Book updateBook(Book book) {
+		Book previousBook = get(book.getId());
+		book.setCreatedOn(previousBook.getCreatedOn());
+		book.setCreatedBy(previousBook.getCreatedBy());
+		book.setUpdatedOn(new Date());
+		book.setUpdatedBy(Utils.getLoggedInUser());
+		authorBookTableService.deleteAll(book);
+		return bookRepository.save(book);
+
 	}
 	
 	public void delete(Book book) {

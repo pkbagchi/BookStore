@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spark LMS - Book Form</title>
+<title>BOOK STORE- Book Form</title>
 
 <th:block th:replace="fragments/styles :: common"></th:block>
 </head>
@@ -103,7 +103,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Author<span class="required">*</span></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
-											<select class="selectpicker" multiple data-live-search="true" th:field="*{author}">
+											<select class="selectpicker" multiple  data-live-search="true" th:field="*{author}" >
 												<option th:each="a : ${book.author}"
 														th:field="*{author}"
 														th:value="${a.id}"
@@ -113,7 +113,6 @@
 										<div class="col-md-3 col-sm-3 col-xs-12 mt-5 text-danger">
 											<span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
 										</div>
-
 									</div>
 
 									<input type="hidden" th:if="${id!=null}" th:field="*{id}" />
