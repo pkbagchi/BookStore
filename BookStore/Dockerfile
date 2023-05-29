@@ -1,6 +1,6 @@
-FROM maven:3.8.2-jdk-8
+FROM maven:3.8.2-jdk-slim
 
 WORKDIR /BookStore
 COPY . .
-RUN mvn clean install -DskipTests=true -U
+RUN mvn clean package -pl app02:app02 -am -DskipTests -e -X
 CMD mvn spring-boot:run
