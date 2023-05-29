@@ -24,3 +24,8 @@ If you need to stop and remove all containers, networks, and all images used by 
 ```bash
 docker-compose down --rmi all
 ```
+## Login Credentials
+```bash
+username: admin
+password: admin
+```
