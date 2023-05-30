@@ -13,6 +13,13 @@ The services can be run on the background with command:
 ```bash
 docker-compose up -d
 ```
+Now you can open localhost:6868 to view the app
+
+## Login Credentials
+```bash
+username: admin
+password: admin
+```
 
 ## Stop the System
 Stopping all the running containers is also simple with a single command:
@@ -23,11 +30,4 @@ docker-compose down
 If you need to stop and remove all containers, networks, and all images used by any service in <em>docker-compose.yml</em> file, use the command:
 ```bash
 docker-compose down --rmi all
-```
-Now you can open localhost:6868 to view the app
-
-## Login Credentials
-```bash
-username: admin
-password: admin
 ```
