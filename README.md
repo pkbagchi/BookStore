@@ -24,6 +24,8 @@ If you need to stop and remove all containers, networks, and all images used by 
 ```bash
 docker-compose down --rmi all
 ```
+Now you can open localhost:6868 to view the app
+
 ## Login Credentials
 ```bash
 username: admin
